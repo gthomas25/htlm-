@@ -1,0 +1,158 @@
+<html>
+<head>
+<title>SwingControlDemo.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #808080;}
+.s3 { color: #6897bb;}
+.s4 { color: #6a8759;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+SwingControlDemo.java</font>
+</center></td></tr></table>
+<pre><span class="s0">import </span><span class="s1">java.awt.*</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.awt.event.*</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">javax.swing.*</span><span class="s0">;</span>
+
+<span class="s0">public class </span><span class="s1">SwingControlDemo </span><span class="s0">implements </span><span class="s1">ActionListener {</span>
+    <span class="s0">private </span><span class="s1">JFrame mainFrame</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">JLabel statusLabel</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">JPanel controlPanel</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">JMenuBar mb</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">JMenu file</span><span class="s0">, </span><span class="s1">edit</span><span class="s0">, </span><span class="s1">help</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">JMenuItem cut</span><span class="s0">, </span><span class="s1">copy</span><span class="s0">, </span><span class="s1">paste</span><span class="s0">, </span><span class="s1">selectAll</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">JTextArea ta</span><span class="s0">; </span><span class="s2">//typing area</span>
+    <span class="s0">private int </span><span class="s1">WIDTH=</span><span class="s3">800</span><span class="s0">;</span>
+    <span class="s0">private int </span><span class="s1">HEIGHT=</span><span class="s3">700</span><span class="s0">;</span>
+
+
+    <span class="s0">public </span><span class="s1">SwingControlDemo() {</span>
+        <span class="s1">prepareGUI()</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public static void </span><span class="s1">main(String[] args) {</span>
+        <span class="s1">SwingControlDemo swingControlDemo = </span><span class="s0">new </span><span class="s1">SwingControlDemo()</span><span class="s0">;</span>
+        <span class="s1">swingControlDemo.showEventDemo()</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">private void </span><span class="s1">prepareGUI() {</span>
+        <span class="s1">mainFrame = </span><span class="s0">new </span><span class="s1">JFrame(</span><span class="s4">&quot;Java SWING Examples&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">mainFrame.setSize(WIDTH</span><span class="s0">, </span><span class="s1">HEIGHT)</span><span class="s0">;</span>
+        <span class="s1">mainFrame.setLayout(</span><span class="s0">new </span><span class="s1">GridLayout(</span><span class="s3">3</span><span class="s0">, </span><span class="s3">1</span><span class="s1">))</span><span class="s0">;</span>
+
+        <span class="s2">//menu at top</span>
+        <span class="s1">cut = </span><span class="s0">new </span><span class="s1">JMenuItem(</span><span class="s4">&quot;cut&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">copy = </span><span class="s0">new </span><span class="s1">JMenuItem(</span><span class="s4">&quot;copy&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">paste = </span><span class="s0">new </span><span class="s1">JMenuItem(</span><span class="s4">&quot;paste&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">selectAll = </span><span class="s0">new </span><span class="s1">JMenuItem(</span><span class="s4">&quot;selectAll&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">cut.addActionListener(</span><span class="s0">this</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">copy.addActionListener(</span><span class="s0">this</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">paste.addActionListener(</span><span class="s0">this</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">selectAll.addActionListener(</span><span class="s0">this</span><span class="s1">)</span><span class="s0">;</span>
+
+        <span class="s1">mb = </span><span class="s0">new </span><span class="s1">JMenuBar()</span><span class="s0">;</span>
+        <span class="s1">file = </span><span class="s0">new </span><span class="s1">JMenu(</span><span class="s4">&quot;File&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">edit = </span><span class="s0">new </span><span class="s1">JMenu(</span><span class="s4">&quot;Edit&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">help = </span><span class="s0">new </span><span class="s1">JMenu(</span><span class="s4">&quot;Help&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">edit.add(cut)</span><span class="s0">;</span>
+        <span class="s1">edit.add(copy)</span><span class="s0">;</span>
+        <span class="s1">edit.add(paste)</span><span class="s0">;</span>
+        <span class="s1">edit.add(selectAll)</span><span class="s0">;</span>
+        <span class="s1">mb.add(file)</span><span class="s0">;</span>
+        <span class="s1">mb.add(edit)</span><span class="s0">;</span>
+        <span class="s1">mb.add(help)</span><span class="s0">;</span>
+        <span class="s2">//end menu at top</span>
+
+        <span class="s1">ta = </span><span class="s0">new </span><span class="s1">JTextArea()</span><span class="s0">;</span>
+        <span class="s1">ta.setBounds(</span><span class="s3">50</span><span class="s0">, </span><span class="s3">5</span><span class="s0">, </span><span class="s1">WIDTH-</span><span class="s3">100</span><span class="s0">, </span><span class="s1">HEIGHT-</span><span class="s3">50</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">mainFrame.add(mb)</span><span class="s0">;  </span><span class="s2">//add menu bar</span>
+        <span class="s1">mainFrame.add(ta)</span><span class="s0">;</span><span class="s2">//add typing area</span>
+        <span class="s1">mainFrame.setJMenuBar(mb)</span><span class="s0">; </span><span class="s2">//set menu bar</span>
+
+        <span class="s1">statusLabel = </span><span class="s0">new </span><span class="s1">JLabel(</span><span class="s4">&quot;&quot;</span><span class="s0">, </span><span class="s1">JLabel.CENTER)</span><span class="s0">;</span>
+        <span class="s1">statusLabel.setSize(</span><span class="s3">350</span><span class="s0">, </span><span class="s3">100</span><span class="s1">)</span><span class="s0">;</span>
+
+        <span class="s1">mainFrame.addWindowListener(</span><span class="s0">new </span><span class="s1">WindowAdapter() {</span>
+            <span class="s0">public void </span><span class="s1">windowClosing(WindowEvent windowEvent) {</span>
+                <span class="s1">System.exit(</span><span class="s3">0</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">}</span>
+        <span class="s1">})</span><span class="s0">;</span>
+        <span class="s1">controlPanel = </span><span class="s0">new </span><span class="s1">JPanel()</span><span class="s0">;</span>
+        <span class="s1">controlPanel.setLayout(</span><span class="s0">new </span><span class="s1">FlowLayout())</span><span class="s0">; </span><span class="s2">//set the layout of the pannel</span>
+
+        <span class="s1">mainFrame.add(controlPanel)</span><span class="s0">;</span>
+        <span class="s1">mainFrame.add(statusLabel)</span><span class="s0">;</span>
+        <span class="s1">mainFrame.setVisible(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">private void </span><span class="s1">showEventDemo() {</span>
+
+        <span class="s1">JButton okButton = </span><span class="s0">new </span><span class="s1">JButton(</span><span class="s4">&quot;OK&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">JButton submitButton = </span><span class="s0">new </span><span class="s1">JButton(</span><span class="s4">&quot;Submit&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">JButton cancelButton = </span><span class="s0">new </span><span class="s1">JButton(</span><span class="s4">&quot;Cancel&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">JButton startbutton = </span><span class="s0">new </span><span class="s1">JButton(</span><span class="s4">&quot;startbutton&quot;</span><span class="s1">)</span><span class="s0">;</span>
+
+
+        <span class="s1">okButton.setActionCommand(</span><span class="s4">&quot;OK&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">startbutton.setActionCommand(</span><span class="s4">&quot;startbutton&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">submitButton.setActionCommand(</span><span class="s4">&quot;Submit&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">cancelButton.setActionCommand(</span><span class="s4">&quot;Cancel&quot;</span><span class="s1">)</span><span class="s0">;</span>
+
+
+        <span class="s1">okButton.addActionListener(</span><span class="s0">new </span><span class="s1">ButtonClickListener())</span><span class="s0">;</span>
+        <span class="s1">submitButton.addActionListener(</span><span class="s0">new </span><span class="s1">ButtonClickListener())</span><span class="s0">;</span>
+        <span class="s1">cancelButton.addActionListener(</span><span class="s0">new </span><span class="s1">ButtonClickListener())</span><span class="s0">;</span>
+        <span class="s1">startbutton.addActionListener(</span><span class="s0">new </span><span class="s1">ButtonClickListener())</span><span class="s0">;</span>
+
+        <span class="s1">controlPanel.add(okButton)</span><span class="s0">;</span>
+        <span class="s1">controlPanel.add(submitButton)</span><span class="s0">;</span>
+        <span class="s1">controlPanel.add(cancelButton)</span><span class="s0">;</span>
+        <span class="s1">controlPanel.add(startbutton)</span><span class="s0">;</span>
+
+
+
+        <span class="s1">mainFrame.setVisible(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">actionPerformed(ActionEvent e) {</span>
+        <span class="s0">if </span><span class="s1">(e.getSource() == cut)</span>
+            <span class="s1">ta.cut()</span><span class="s0">;</span>
+        <span class="s0">if </span><span class="s1">(e.getSource() == paste)</span>
+            <span class="s1">ta.paste()</span><span class="s0">;</span>
+        <span class="s0">if </span><span class="s1">(e.getSource() == copy)</span>
+            <span class="s1">ta.copy()</span><span class="s0">;</span>
+        <span class="s0">if </span><span class="s1">(e.getSource() == selectAll)</span>
+            <span class="s1">ta.selectAll()</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">private class </span><span class="s1">ButtonClickListener </span><span class="s0">implements </span><span class="s1">ActionListener {</span>
+        <span class="s0">public void </span><span class="s1">actionPerformed(ActionEvent e) {</span>
+            <span class="s1">String command = e.getActionCommand()</span><span class="s0">;</span>
+
+            <span class="s0">if </span><span class="s1">(command.equals(</span><span class="s4">&quot;OK&quot;</span><span class="s1">)) {</span>
+                <span class="s1">statusLabel.setText(</span><span class="s4">&quot;Ok Button clicked.&quot;</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">} </span><span class="s0">else if </span><span class="s1">(command.equals(</span><span class="s4">&quot;Submit&quot;</span><span class="s1">)) {</span>
+                <span class="s1">statusLabel.setText(</span><span class="s4">&quot;Submit Button clicked.&quot;</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">} </span><span class="s0">else if </span><span class="s1">(command.equals(</span><span class="s4">&quot;Cancel&quot;</span><span class="s1">)) {</span>
+                <span class="s1">statusLabel.setText(</span><span class="s4">&quot;Cancel Button clicked.&quot;</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">} </span><span class="s0">else if </span><span class="s1">(command.equals(</span><span class="s4">&quot;startbutton&quot;</span><span class="s1">)){</span>
+                <span class="s1">statusLabel.setText(</span><span class="s4">&quot;Start Button clicked.&quot;</span><span class="s1">)</span><span class="s0">;</span>
+
+            <span class="s1">}</span>
+            <span class="s0">else</span><span class="s1">{</span>
+                <span class="s1">statusLabel.setText(</span><span class="s4">&quot;No Button CLicked&quot;</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">}</span>
+                
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+<span class="s1">}</span></pre>
+</body>
+</html>
