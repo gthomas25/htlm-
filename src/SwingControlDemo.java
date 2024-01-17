@@ -11,6 +11,7 @@ public class SwingControlDemo implements ActionListener {
     private JMenuItem cut, copy, paste, selectAll;
     private JTextArea ta; //typing area
     private int WIDTH=800;
+    //change jb;iubjuibou
     private int HEIGHT=700;
 
 
